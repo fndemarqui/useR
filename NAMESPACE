@@ -3,3 +3,4 @@
 export(install_missing_packages)
 export(is.installed)
 export(start_clean_session)
+importFrom(Rdpack,reprompt)
