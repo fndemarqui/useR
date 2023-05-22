@@ -1,0 +1,14 @@
+Package: useR
+Title: Um Curso Introdutório de R
+Version: 0.0.1
+Authors@R: 
+    person(given = "Fabio",
+           family = "Demarqui",
+           role = c("aut", "cre", "cph"),
+           email = "fndemarqui@est.ufmg.br",
+           comment = c(ORCID = "0000-0001-9236-1986"))
+Description: Funções e conjuntos de dados utilizados no "Curso Introdutório de R".
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
