@@ -1,9 +1,5 @@
 
 
-
-
-
-
 #' Checking if a package is installed
 #' @aliases is.installed
 #' @export
