@@ -32,7 +32,7 @@ NULL
 
 #' ENEM 2019 em Belo Horizonte
 #'
-#' @name enem2019bh
+#' @name enem
 #' @docType data
 #' @author Fábio N. Demarqui \email{fndemarqui@est.ufmg.br}
 #' @keywords datasets
@@ -54,6 +54,8 @@ NULL
 #'   \item{ESC_pai}{pai possui ensino superior completo? não sabe, sim, não}
 #'   \item{ESC_mae}{mae possui ensino superior completo? não sabe, sim, não}
 #'   \item{renda_fam}{renda familiar mensal: A - nenhuma renda; B - até R$ 998,00; C - R$ 998,01 até R$ 1.497,00; D - R$ 1.497,01 até R$ 1.996,00; E - R$ 1.996,01 até R$ 2.495,00; F - R$ 2.495,01 até R$ 2.994,00; G - R$ 2.994,01 até R$ 3.992,00; H - R$ 3.992,01 até R$ 4.990,00; I - R$ 4.990,01 até R$ 5.988,00; J - R$ 5.988,01 até R$ 6.986,00; K - R$ 6.986,01 até R$ 7.984,00; L - R$ 7.984,01 até R$ 8.982,00; M - R$ 8.982,01 até R$ 9.980,00; N - R$ 9.980,01 até R$ 11.976,00; O - R$ 11.976,01 até R$ 14.970,00; P - R$ 14.970,01 até R$ 19.960,00; Q - mais de R$ 19.960,00.}
+#'   \item{sem_nota}{indicadora de realização de todas as provas}
+#'
 #' }
 
 #' @source Instituto Nacional de Estudos e Pesquisas Educacionais Anísio Teixeira (https://www.gov.br/inep/pt-br/acesso-a-informacao/dados-abertos/microdados).

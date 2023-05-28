@@ -17,3 +17,4 @@ RoxygenNote: 7.2.3
 URL: https://github.com/fndemarqui/useR
 BugReports: https://github.com/fndemarqui/useR/issues
 RdMacros: Rdpack  
+LazyData: true
