@@ -1,3 +1,8 @@
+
+# useR 0.0.1
+
+ - First version of the package.
+
 # useR 0.0.2
 
-* Initial CRAN submission.
+* Combining est031 and useR packages into a single package.
