@@ -1,11 +1,9 @@
 
 
 
-library(shiny)
-
 app_tcl_prop <- function(...){
   ui <- fluidPage(
-    headerPanel("Teorema do Limite Central para Proporções"),
+    headerPanel("Teorema do Limite Central para Proporcoes"),
     fluidRow(
       column(4,
              numericInput(
@@ -36,18 +34,19 @@ app_tcl_prop <- function(...){
     tb <- reactive({
       input$atualizar
       tb <- tibble(
-        prop = replicate(1e3, mean(rbinom(n = input$n,  size = 1, prob = input$p)))
+        prop = replicate(1e3, mean(stats::rbinom(n = input$n,  size = 1, prob = input$p)))
       ) %>%
         mutate(
-          z = (prop - input$p)/sqrt(input$p*(1-input$p)/input$n)
+          z = (.data$prop - input$p)/sqrt(input$p*(1-input$p)/input$n)
         )
     })
 
     output$hist <- renderPlot({
-      ggplot(tb(), aes(x = z)) +
-        geom_histogram(aes(y=..density..), bins = 30) +
-        geom_histogram(aes(y=..density..)) +
-        stat_function(fun=dnorm, color = "blue") +
+      data <- tb()
+      ggplot(data, aes(x = .data$z)) +
+        geom_histogram(aes(y = .data$..density..), bins = 30) +
+        geom_histogram(aes(y = .data$..density..)) +
+        stat_function(fun=stats::dnorm, color = "blue") +
         xlim(c(-5,5))
     })
   }

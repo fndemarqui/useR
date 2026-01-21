@@ -11,10 +11,10 @@ Data.frame com 80 linhas e uma variável:
 }
 }
 \description{
-Exemplo 6.4 do livro \insertCite{2015Montgomery}{est031}. Dados referentes à resistência à compressão (em psi) de 80 corpos de prova de liga de alumínio-lítio.
+Exemplo 6.4 do livro \insertCite{2015Montgomery}{useR}. Dados referentes à resistência à compressão (em psi) de 80 corpos de prova de liga de alumínio-lítio.
 }
 \references{
-\insertRef{2015Montgomery}{est031}
+\insertRef{2015Montgomery}{useR}
 }
 \author{
 Fábio N. Demarqui \email{fndemarqui@est.ufmg.br}

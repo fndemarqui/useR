@@ -3,3 +3,12 @@
 ^LICENSE\.md$
 ^inst/stuff$
 ^README\.Rmd$
+^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^doc$
+^Meta$
+^vignettes/\.quarto$
+^vignettes/*_files$
+^data-raw$

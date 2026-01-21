@@ -5,3 +5,8 @@
 .DS_Store
 inst/stuff
 .quarto
+docs
+inst/doc
+/doc/
+/Meta/
+**/.quarto/

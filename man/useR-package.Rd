@@ -4,6 +4,6 @@
 \alias{useR-package}
 \title{The 'useR' package.}
 \description{
-Datasets and functions used in the Course Um Curso Introdutório de R.
+Datasets and functions used to teach statistics with R.
 _PACKAGE package
 }

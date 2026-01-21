@@ -1,0 +1,295 @@
+---
+title: "Nutrição"
+format: 
+  html:
+    toc: false
+    html-math-method: mathjax
+vignette: >
+  %\VignetteIndexEntry{Vignette's Title}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r}
+#| label: options
+#| echo: false
+
+options(dplyr.summarise.inform = FALSE)
+```
+
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(useR)
+
+# carregando os dados
+data(nutricao)
+# visualizando:
+glimpse(nutricao)
+```
+
+
+## Manipulações e sumários
+A função `dplyr::summarise()` nos permite criar variados tipos de sumários do nosso conjunto de dados:
+
+```{r}
+nutricao %>%
+  summarise(
+    min = min(peso),
+    media = mean(peso),
+    mediana = median(peso),
+    max = max(peso),
+    dp = sd(peso),
+    cv = cv(peso)
+  )
+
+```
+
+:::callout-warning
+Mais adiante mostraremos uma forma alternativa (e na minha opinião mais interessante!) para obter o sumário apresentado acima.
+:::
+
+Frequentemente na prática temos interesse em sumarizar variáveis quantitativas de acordo com os níveis de uma ou mais variáveis categóricas. Isso pode ser facilmente feito no `R` combinando as funções `dplyr::summarise()` e `dplyr::group_by()`, conforme ilustrado no exemplo abaixo:
+
+```{r}
+nutricao %>%
+  group_by(sexo, sedentarismo) %>%
+  summarise(
+    media = mean(peso),
+    dp = sd(peso)
+  )
+```
+
+:::callout-note
+A função `dplyr::summarise()` usada em conjunto com a função `dplyr::group_by()` fornece um sumário para cada combinação de níveis das variáveis categóricas fornecidas para a função `dplyr::group_by()`
+:::
+
+Uma outra função bastante útil quando estamos trabalhando com a função `dplyr::summarise()` é a função `dplyr::across()`, conforme ilustrado nos exemplos apresentados a seguir:
+
+
+```{r}
+# várias variáveis, uma função:
+nutricao %>%
+  summarise(
+    across(c(peso, altura), mean)
+  )
+
+# uma variável, várias funções:
+nutricao %>%
+  summarise(
+    across(peso, list(min = min, mediana=median, media=mean, max=max, dp=sd, cv=cv))
+  )
+
+# mudando os nomes na saída:
+nutricao %>%
+  summarise(
+    across(peso, list(min = min, mediana=median, media=mean, max=max, dp=sd, cv=cv), .names = "{.fn}")
+  )
+
+# combinando across e group_by
+nutricao %>%
+  group_by(sexo) %>%
+  summarise(
+    across(peso, list(min = min, mediana=median, media=mean, max=max, dp=sd, cv=cv), .names = "{.fn}")
+  )
+
+nutricao %>%
+  group_by(sexo, sedentarismo) %>%
+  summarise(
+    across(peso, list(min = min, mediana=median, media=mean, max=max, dp=sd, cv=cv), .names = "{.fn}")
+  )
+```
+
+Agora vamos utilizar a função `dplyr::where()` para calcular a média e o desvio padrão para todas as variáveis quantitativas do nosso banco de dados:
+
+```{r}
+media <- nutricao %>%
+  summarise(across(where(is.numeric), mean))
+media
+
+dp <- nutricao %>% 
+  summarise(across(where(is.numeric), sd))
+dp
+```
+
+Agora vamos contriuir uma nova tabela juntando as médias e desvio padrões obtidos no passo anterior. Para realizar essa tarefa precisaremos do auxílio das funções `dply::bind_rows()` e `dplyr::bind_cols()`:
+
+
+```{r}
+estatisticas <- data.frame(
+  estatistica = c("media", "dp") 
+)
+estatisticas
+
+tb <- bind_rows(media, dp)
+tb
+tb <- bind_cols(estatisticas, tb)
+tb
+```
+
+
+## Transformações
+
+O Índice de Massa Corpórea (IMC) é uma medida internacional usada para avaliar nosso peso ideal. Seu cálculo é feito dividindo-se o peso pela altura elevada ao quadrado, isto é, 
+
+$$\mbox{imc} = \frac{\mbox{peso}}{\mbox{altura}^2}.$$
+
+
+A @tbl-imc fornece uma classificação simplificada do IMC.
+
+```{r}
+#| label: tbl-imc
+#| tbl-cap: Classificação simplificada do IMC.
+#| message: false
+#| warning: false
+#| echo: false
+
+library(kableExtra)
+
+tibble(
+  faixa = c("imc < 18.5", "18.5 $\\leq$ imc < 25", "25 $\\leq$ imc < 30", "$imc \\ge$ 30"),
+  `classificação` = c("magreza", "saudável", "pré-obesidade", "obesidade")
+) %>%
+  kable(format = "pandoc", escape = FALSE, align = "c",
+    booktabs = TRUE) %>%
+    kable_styling()
+```
+
+
+Suponha que temos interesse em investigar o IMC em função do sexo dos alunos. A função `dplyr::mutate()` pode ser utilizada tanto para modificarmos variáveis existentes no nosso banco de dados, quanto para criarmos novas variáveis.
+
+Vamos utilizar a função `dplyr::mutate()` para alterar a classe da variável `sexo` e criarmos a variável imc:
+
+```{r}
+library(useR)
+library(tidyverse)
+
+data(nutricao)
+glimpse(nutricao)
+
+
+nutricao <- nutricao %>%
+  mutate(
+    sexo = as.factor(sexo),
+    imc = peso/(altura^2)
+  )
+glimpse(nutricao)
+
+```
+
+Agora vamos utilizar a @tbl-imc para criarmos uma variável com a classificação dos estudantes:
+
+```{r}
+# criando a faixa de valores:
+faixa <- c(0, 18.5, 25, 30, Inf)
+
+# incluindo a classificação no banco de dados:
+nutricao <- nutricao %>%
+  mutate(
+    classificacao = cut(imc, faixa)
+  )
+glimpse(nutricao)
+```
+
+Recodificando os níveis da variável `classificacao` com o auxílio da função `dplyr::recode()`:
+
+```{r}
+nutricao <- nutricao %>%
+  mutate(
+    classificacao = recode(
+      classificacao, 
+      "(0,18.5]" = "magreza",
+      "(18.5,25]" = "saudavel",
+      "(25,30]" = "pre-obesidade",
+      "(30,Inf]" = "obesidade",
+    )
+  )
+
+# verificando:
+levels(nutricao$classificacao)
+
+```
+
+Suponha agora que nós temos o interesse em obter uma tabela de contingência para as variáveis `sexo` e `classificacao`. 
+
+```{r}
+tb <- nutricao %>%
+  group_by(sexo, classificacao) %>%
+  summarise(
+    n = n()
+  ) %>%
+  mutate(
+    p = n/sum(n)
+  )
+tb
+class(tb)
+```
+
+Precisamos alterar a classe do objeto `tb` para data.frame de modo a obtermos as frequências relativas relativas ao total geral:
+
+```{r}
+tb <- tb %>%
+  as.data.frame() %>%
+  mutate(
+    p = n/sum(n)
+  )
+tb
+```
+
+Finalmente, para obtermos a tabela de contingência desejada, vamos utilizar as funções `dplyr::select()` e `tidyr::pivot_winder()`:
+
+```{r}
+# frequência absoluta:
+tb %>%
+  select(-p) %>%
+  pivot_wider(
+    values_from = n,
+    names_from = classificacao,
+  )
+
+# para completar com zero:
+tb %>%
+  select(-p) %>%
+  pivot_wider(
+    values_from = n,
+    names_from = classificacao,
+    values_fill = 0
+  )
+
+# frequência relativa:
+tb %>%
+  select(-n) %>%
+  pivot_wider(
+    values_from = p,
+    names_from = classificacao,
+    values_fill = 0
+  )
+```
+
+No código acima a função `dplyr::select()` seleciona a variável que será excluida do tibble `tb`, enquanto a função `tidyr::pivot_wider()` 
+
+:::callout-note
+Estudaremos a função `tidyr::pivot_wider()`, bem com a função `tidyr::pivot_long()`, mais adiante em nosso curso.
+:::
+
+
+A média do IMC por sexo pode ser obtida da seguinte forma:
+
+```{r}
+ggplot(nutricao, aes(x=sexo, y=imc)) +
+  geom_boxplot()
+```
+
+
+```{r}
+ggplot(nutricao, aes(y=imc)) +
+  geom_boxplot() +
+  facet_grid(sexo ~ sedentarismo)
+```
+
+
+

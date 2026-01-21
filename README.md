@@ -1,21 +1,10 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
-```
 
 # useR
 
 <!-- badges: start -->
+
 [![R-CMD-check](https://github.com/fndemarqui/useR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fndemarqui/useR/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
@@ -23,10 +12,10 @@ Datasets and functions used to teach statistics with R.
 
 ## Installation
 
-Você pode instalar a versão de desenvolvimento do pacote __useR__ a partir do GitHub da seguinte forma:
+Você pode instalar a versão de desenvolvimento do pacote **useR** a
+partir do GitHub da seguinte forma:
 
-```{r installation}
-#| eval: false
+``` r
 # install.packages("pak")
 pak::pak("fndemarqui/useR")
 ```
@@ -35,9 +24,20 @@ pak::pak("fndemarqui/useR")
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r example}
+``` r
 library(useR)
+#> Loading required package: dplyr
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+#> Loading required package: ggplot2
+#> Loading required package: shiny
 data(nutricao)
 cv(nutricao$peso)
+#> [1] 17.77399
 ```
-

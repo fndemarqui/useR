@@ -10,9 +10,9 @@
 
 cv <- function(x, percentual = TRUE, ...){
   if(is.numeric(x)){
-    cv <- sd(x, ...)/mean(x, ...)
+    cv <- stats::sd(x, ...)/mean(x, ...)
   }else{
-    warning("Somente vetores atômicos numéricos são permitidos")
+    warning("Only atomic vectors are allowed!!!")
     cv <- NULL
   }
   if(isTRUE(percentual)){

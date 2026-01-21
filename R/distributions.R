@@ -13,7 +13,6 @@
 #' @param x,q	vector of quantiles representing the total number of Bernoulli trials (failures + sucess).
 #' @param p	vector of probabilities.
 #' @param n	number of observations. If length(n) > 1, the length is taken to be the number required.
-#' @param size total number of successful trials (failures + one success), or dispersion parameter (the shape parameter of the gamma mixing distribution). Must be strictly positive, need not be integer.
 #' @param prob probability of success in each trial. 0 < prob <= 1.
 #' @param log,log.p	 logical; if TRUE, probabilities p are given as log(p).
 #' @param lower.tail	logical; if TRUE (default), probabilities are \eqn{P[X \le x]}; otherwise, \eqn{P[X > x]}.
@@ -38,7 +37,7 @@
 #'rgeom2 returns a vector of type \code{\link[base:integer]{integer}} unless generated values exceed the maximum representable integer when \code{\link[base:double]{double}} values are returned since R version 4.0.0.
 #'
 #' @seealso \code{\link[stats:Geometric]{Geometric}} for the original implementation of the geometric distribution.
-#' @seealso \code{\link[est031:NegBinomial2]{NegBinomial2}} for the negative binomial (Version 2) which generalizes the geometric distribution (Version 2).
+#' @seealso \code{\link[useR:NegBinomial2]{NegBinomial2}} for the negative binomial (Version 2) which generalizes the geometric distribution (Version 2).
 
 
 

@@ -28,8 +28,6 @@ rgeom2(n, prob)
 \item{p}{vector of probabilities.}
 
 \item{n}{number of observations. If length(n) > 1, the length is taken to be the number required.}
-
-\item{size}{total number of successful trials (failures + one success), or dispersion parameter (the shape parameter of the gamma mixing distribution). Must be strictly positive, need not be integer.}
 }
 \value{
 dgeom2 gives the density, pgeom2 gives the distribution function, qgeom2 gives the quantile function, and rgeom2 generates random deviates.
@@ -59,7 +57,7 @@ The quantile is defined as the smallest value x such that  \eqn{F(x) \ge p}, whe
 \seealso{
 \code{\link[stats:Geometric]{Geometric}} for the original implementation of the geometric distribution.
 
-\code{\link[est031:NegBinomial2]{NegBinomial2}} for the negative binomial (Version 2) which generalizes the geometric distribution (Version 2).
+\code{\link[useR:NegBinomial2]{NegBinomial2}} for the negative binomial (Version 2) which generalizes the geometric distribution (Version 2).
 }
 \concept{Discrete}
 \concept{Univariate}
